@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire Dynamique</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height:100vh;
+        }
+
+        form {
+            width: 500px;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 10px;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, select, button {
+            padding: 8px;
+            font-size: 1em;
+            border-radius: 10px;
+        }
+
+        button {
+            grid-column: span 2;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h2>Formulaire Dynamique</h2>
+    <form id="form">
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" required>
+
+        <label for="prenom">Prénom :</label>
+        <input type="text" id="prenom" required>
+
+        <label for="dateNaissance">Date de naissance :</label>
+        <input type="date" id="dateNaissance" required>
+
+        <label for="choix">Choix :</label>
+        <select id="choix" onchange="afficherChamps()">
+            <option value="">-- Sélectionnez --</option>
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+        </select>
+
+        
+        <label id="label1" class="hidden">Input 1 :</label>
+        <input type="text" id="input1" class="hidden">
+
+        <label id="label2" class="hidden">Input 2 :</label>
+        <input type="text" id="input2" class="hidden">
+
+        <label id="label3" class="hidden">Input 3 :</label>
+        <input type="text" id="input3" class="hidden">
+
+        <label id="label4" class="hidden">Input 4 :</label>
+        <input type="text" id="input4" class="hidden">
+
+        <label id="label5" class="hidden">Input 5 :</label>
+        <input type="text" id="input5" class="hidden">
+
+        
+        <button type="button" onclick="validerFormulaire()">Soumettre</button>
+    </form>
+
+    <script>
+        function afficherChamps() {
+            const choix = document.getElementById("choix").value;
+
+            
+            const elements = ["label1", "input1", "label2", "input2", "label3", "input3", "label4", "input4", "label5", "input5"];
+            elements.forEach(id => document.getElementById(id).style.display = "none");
+
+            if (choix == "option1") {
+                document.getElementById("label1").style.display = "block";
+                document.getElementById("input1").style.display = "block";
+                document.getElementById("label2").style.display = "block";
+                document.getElementById("input2").style.display = "block";
+                document.getElementById("label3").style.display = "block";
+                document.getElementById("input3").style.display = "block";
+            } else if (choix == "option2") {
+                document.getElementById("label1").style.display = "block";
+                document.getElementById("input1").style.display = "block";
+                document.getElementById("label4").style.display = "block";
+                document.getElementById("input4").style.display = "block";
+                document.getElementById("label5").style.display = "block";
+                document.getElementById("input5").style.display = "block";
+            }
+        }
+
+        function validerFormulaire() {
+            const regexTexte = /^[a-zA-ZÀ-ÿ\s]+$/; 
+            const nom = document.getElementById("nom").value;
+            const prenom = document.getElementById("prenom").value;
+
+            if (!regexTexte.test(nom) || !regexTexte.test(prenom)) {
+                alert("Nom et prénom ne doivent contenir que des lettres.");
+                return;
+            }
+            alert("Formulaire validé avec succès !");
+        }
+    </script>
+</body>
+</html>
