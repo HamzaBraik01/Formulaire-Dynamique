@@ -46,9 +46,32 @@
         .hidden {
             display: none;
         }
+        #messageDiv {
+            margin-top: 20px;
+            width: 500px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        #successMessage {
+            background-color: #15cb3f;
+            color: #101010;
+            border: 1px solid #c3e6cb;
+        }
+
+        #errorMessage {
+            background-color: #d91929;
+            color: #070707;
+            border: 1px solid #f5c6cb;
+        }
     </style>
 </head>
 <body>
+    <div id="messageDiv">
+        <div id="successMessage" class="hidden">Formulaire validé avec succès !</div>
+        <div id="errorMessage" class="hidden">Erreur dans le formulaire. Veuillez vérifier les champs.</div>
+    </div>
     <h2>Formulaire Dynamique</h2>
     <form id="form">
         <label for="nom">Nom :</label>
@@ -118,11 +141,41 @@
             const prenom = document.getElementById("prenom").value;
             const dateNaissance = document.getElementById("dateNaissance").value;
             const choix = document.getElementById("choix").value;
+            const messageDiv = document.getElementById("messageDiv");
+            const successMessage = document.getElementById("successMessage");
+            const errorMessage = document.getElementById("errorMessage");
+
+            successMessage.classList.add("hidden");
+            errorMessage.classList.add("hidden");
             
             if (!regexTexte.test(nom) || !regexTexte.test(prenom)) {
-                alert("Nom et prénom ne doivent contenir que des lettres.");
+                errorMessage.classList.remove("hidden");
+                messageDiv.style.display = "block";
                 return;
             }
+            if (choix === "option1") {
+                if (!document.getElementById("input1").value ||
+                    !document.getElementById("input2").value ||
+                    !document.getElementById("input3").value) {
+                    errorMessage.classList.remove("hidden");
+                    messageDiv.style.display = "block";
+                    return;
+                }
+            } else if (choix === "option2") {
+                if (!document.getElementById("input1").value ||
+                    !document.getElementById("input4").value ||
+                    !document.getElementById("input5").value) {
+                    errorMessage.classList.remove("hidden");
+                    messageDiv.style.display = "block";
+                    return;
+                }
+            }
+            if (!dateNaissance) {
+                errorMessage.classList.remove("hidden");
+                messageDiv.style.display = "block";
+                return;
+            }
+
             
             const donneesUtilisateur = [nom, prenom, dateNaissance];
             
@@ -143,8 +196,11 @@
             
             localStorage.setItem("donneesUtilisateur", JSON.stringify(donneesUtilisateur));
 
-            alert("Formulaire validé avec succès !");
-            window.location.href = "page2.html";
+            successMessage.classList.remove("hidden");
+            messageDiv.style.display = "block";
+            setTimeout(() => {
+                window.location.href = "page2.html";
+            }, 2000);
         }
     </script>
 </body>
