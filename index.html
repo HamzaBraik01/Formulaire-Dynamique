@@ -6,8 +6,7 @@
     <title>Formulaire Dynamique</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+            background-color: #a56ee0;
             display:flex;
             flex-direction: column;
             justify-content: center;
@@ -85,7 +84,7 @@
         <input type="text" id="input5" class="hidden">
 
         
-        <button type="button" onclick="validerFormulaire()">Soumettre</button>
+        <button type="button" onclick="validerFormulaire()">Enregistrer</button>
     </form>
 
     <script>
@@ -117,12 +116,35 @@
             const regexTexte = /^[a-zA-ZÀ-ÿ\s]+$/; 
             const nom = document.getElementById("nom").value;
             const prenom = document.getElementById("prenom").value;
-
+            const dateNaissance = document.getElementById("dateNaissance").value;
+            const choix = document.getElementById("choix").value;
+            
             if (!regexTexte.test(nom) || !regexTexte.test(prenom)) {
                 alert("Nom et prénom ne doivent contenir que des lettres.");
                 return;
             }
+            
+            const donneesUtilisateur = [nom, prenom, dateNaissance];
+            
+            if (choix === "option1") {
+                donneesUtilisateur.push(
+                    document.getElementById("input1").value,
+                    document.getElementById("input2").value,
+                    document.getElementById("input3").value
+                );
+            } else if (choix === "option2") {
+                donneesUtilisateur.push(
+                    document.getElementById("input1").value,
+                    document.getElementById("input4").value,
+                    document.getElementById("input5").value
+                );
+            }
+
+            
+            localStorage.setItem("donneesUtilisateur", JSON.stringify(donneesUtilisateur));
+
             alert("Formulaire validé avec succès !");
+            window.location.href = "page2.html";
         }
     </script>
 </body>

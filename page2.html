@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats du Formulaire</title>
+    <style>
+        body {
+            background-color: #a56ee0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+        h2 {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .resultat-title {
+            font-size: 18px;
+            color: #0f1113;
+            margin-bottom: 10px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            font-size: 16px;
+            margin: 10px 0;
+            padding: 12px;
+            background: #f1f8ff;
+            border-left: 5px solid #007BFF;
+            border-radius: 5px;
+        }
+        
+        .no-data {
+            color: #888;
+            text-align: center;
+            font-size: 16px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Résultats du Formulaire</h2>
+        <div class="resultat-title">Les données récupérées :</div>
+        <ul id="resultats"></ul>
+        
+    </div>
+
+    <script>
+        const donnees = JSON.parse(localStorage.getItem("donneesUtilisateur"));
+        const resultats = document.getElementById("resultats");
+
+        if (donnees) {
+            donnees.forEach((valeur, index) => {
+                const li = document.createElement("li");
+                li.textContent = `Donnée ${index + 1} : ${valeur}`;
+                resultats.appendChild(li);
+            });
+        } else {
+            const noDataMessage = document.createElement("div");
+            noDataMessage.classList.add("no-data");
+            noDataMessage.textContent = "Aucune donnée trouvée.";
+            resultats.appendChild(noDataMessage);
+        }
+    </script>
+</body>
+</html>
